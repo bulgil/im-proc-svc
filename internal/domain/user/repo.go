@@ -1,10 +1,12 @@
 package user
 
+import "context"
+
 type Repository interface {
-	Get(id int64) (*User, error)
-	GetByUsername(username string) (*User, error)
-	Create(user *User) error
-	Update(user *User) error
-	Delete(user *User) error
-	CheckUsername(username string) bool
+	Get(ctx context.Context, id int64) (*User, error)
+	GetByUsername(ctx context.Context, username string) (*User, error)
+	Create(ctx context.Context, user *User) error
+	Update(ctx context.Context, user *User) error
+	Delete(ctx context.Context, user *User) error
+	CheckUsername(ctx context.Context, username string) (bool, error)
 }

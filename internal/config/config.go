@@ -11,10 +11,19 @@ import (
 type Config struct {
 	Env           string        `yaml:"env" env-default:"prod"`
 	HTTPServerCfg HTTPServerCfg `yaml:"http_server_cfg" env-required:"true"`
+	PGCfg         PGCfg         `yaml:"pg_cfg" env-required:"true"`
 }
 
 type HTTPServerCfg struct {
 	Addr string `yaml:"addr" env-default:":9999"`
+}
+
+type PGCfg struct {
+	Host     string `yaml:"host" env-required:"true"`
+	Port     string `yaml:"port" env-default:"5432"`
+	User     string `yaml:"user" env-required:"true"`
+	Password string `yaml:"password" env-required:"true"`
+	Database string `yaml:"database" env-default:"im-proc-svc"`
 }
 
 func ReadConfig() Config {

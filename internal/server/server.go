@@ -9,7 +9,9 @@ import (
 
 	"github.com/bulgil/im-proc-svc/internal/config"
 	"github.com/bulgil/im-proc-svc/internal/middleware"
+	"github.com/bulgil/im-proc-svc/internal/repository/user"
 	"github.com/bulgil/im-proc-svc/internal/routes"
+	"github.com/bulgil/im-proc-svc/internal/validator"
 )
 
 type Server struct {
@@ -17,12 +19,12 @@ type Server struct {
 	log        *slog.Logger
 }
 
-func New(httpCfg config.HTTPServerCfg, log *slog.Logger) *Server {
+func New(httpCfg config.HTTPServerCfg, userRepo *user.Repository, val *validator.Validator, log *slog.Logger) *Server {
 	srv := &http.Server{
 		Addr: httpCfg.Addr,
 	}
 
-	routes.RegisterRoutes(srv)
+	routes.RegisterRoutes(srv, userRepo, val, log)
 	middleware.ApplyMiddlewares(srv, log)
 
 	return &Server{

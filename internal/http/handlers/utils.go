@@ -11,6 +11,7 @@ type JSONError struct {
 }
 
 func JSONResponse(w http.ResponseWriter, data any, code int) {
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
 
